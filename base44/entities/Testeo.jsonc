@@ -39,12 +39,13 @@
     "resultado": {
       "type": "string",
       "enum": [
+        "pendiente",
         "negativo",
         "no_negativo",
         "ausente",
         "negativa"
       ],
-      "default": "negativo"
+      "default": "pendiente"
     },
     "observacion": {
       "type": "string"

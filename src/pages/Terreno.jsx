@@ -6,6 +6,7 @@ import { base44 } from "@/api/base44Client";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import PageShell from "@/components/personas/PageShell";
+import SortearBar from "@/components/personas/SortearBar";
 
 const OPCIONES = [["negativo", "Negativo", "bg-emerald-600"], ["no_negativo", "No negativo", "bg-red-600"], ["ausente", "Ausente", "bg-slate-500"]];
 
@@ -30,6 +31,7 @@ export default function Terreno() {
   return (
     <PageShell title="Sorteados" subtitle="Para ubicar y testear en terreno">
       <Input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} className="bg-card h-12 text-base" />
+      <SortearBar fecha={fecha} onDone={() => qc.invalidateQueries({ queryKey: ["terreno", fecha] })} />
       {isLoading && <Card className="p-8 text-center text-muted-foreground">Cargando…</Card>}
       {data && !data.length && <Card className="p-8 text-center text-muted-foreground">No hay sorteados para esta fecha.</Card>}
       <div className="space-y-3">
