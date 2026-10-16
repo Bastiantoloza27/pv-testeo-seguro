@@ -11,11 +11,8 @@ export default function Home() {
       fetch(RAW + "prototipo.dc.html").then((r) => r.text()),
       fetch(RAW + "support.js").then((r) => r.text()),
     ]).then(([html, js]) => {
-      const safeJs = js.replace(/<\/script>/gi, "<\\/script>");
-      const full = html.replace(
-        '<script src="./support.js"></script>',
-        () => `<script>${safeJs}</script>`
-      );
+      const jsUrl = URL.createObjectURL(new Blob([js], { type: "text/javascript" }));
+      const full = html.replace('src="./support.js"', `src="${jsUrl}"`);
       url = URL.createObjectURL(new Blob([full], { type: "text/html" }));
       setSrc(url);
     });
