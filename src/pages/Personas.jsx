@@ -4,7 +4,9 @@ import { base44 } from "@/api/base44Client";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import { Plus, Upload } from "lucide-react";
+import ImportarDialog from "@/components/personas/ImportarDialog";
+import AccionesMasivas from "@/components/personas/AccionesMasivas";
 import PageShell from "@/components/personas/PageShell";
 import PersonaForm from "@/components/personas/PersonaForm";
 import PersonasTable from "@/components/personas/PersonasTable";
@@ -17,6 +19,9 @@ export default function Personas() {
   const [estado, setEstado] = useState("todos");
   const [faena, setFaena] = useState("todas");
   const [open, setOpen] = useState(false);
+  const [importar, setImportar] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const refresh = () => { setSelected([]); setImportar(false); qc.invalidateQueries(); };
 
   const query = {};
   if (estado !== "todos") query.estado = estado;
@@ -43,7 +48,10 @@ export default function Personas() {
     <PageShell
       title="Personas"
       subtitle={`${total} trabajadores activos en el universo de sorteo`}
-      actions={<Button onClick={() => setOpen(true)}><Plus className="w-4 h-4 mr-1" /> Agregar trabajador</Button>}
+      actions={<>
+        <Button variant="secondary" onClick={() => setImportar(true)}><Upload className="w-4 h-4 mr-1" /> Importar archivo</Button>
+        <Button onClick={() => setOpen(true)}><Plus className="w-4 h-4 mr-1" /> Agregar trabajador</Button>
+      </>}
     >
       <PersonasStats />
       <div className="flex flex-wrap gap-3">
@@ -63,7 +71,9 @@ export default function Personas() {
           </SelectContent>
         </Select>
       </div>
-      <PersonasTable items={items} loading={list.isLoading} />
+      <AccionesMasivas ids={selected} onDone={refresh} />
+      <PersonasTable items={items} loading={list.isLoading} selected={selected} onSelect={setSelected} />
+      {importar && <ImportarDialog open={importar} onOpenChange={setImportar} onDone={refresh} />}
       {list.hasNextPage && (
         <div className="text-center">
           <Button variant="outline" onClick={() => list.fetchNextPage()} disabled={list.isFetchingNextPage}>Cargar más</Button>
