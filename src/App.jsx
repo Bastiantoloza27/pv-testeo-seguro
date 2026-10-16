@@ -15,6 +15,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Personas from './pages/Personas';
 import PersonaDetalle from './pages/PersonaDetalle';
+import Terreno from './pages/Terreno';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -51,6 +52,7 @@ const AuthenticatedApp = () => {
         <Route path="/" element={<Home />} />
         <Route path="/personas" element={<Personas />} />
         <Route path="/personas/:id" element={<PersonaDetalle />} />
+        <Route path="/terreno" element={<Terreno />} />
       </Route>
       {/* Add your page Route elements here */}
       <Route path="*" element={<PageNotFound />} />

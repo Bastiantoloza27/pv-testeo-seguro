@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useInfiniteQuery, useQuery, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
@@ -49,6 +50,7 @@ export default function Personas() {
       title="Personas"
       subtitle={`${total} trabajadores activos en el universo de sorteo`}
       actions={<>
+        <Button variant="outline" asChild><Link to="/terreno">Sorteados (terreno)</Link></Button>
         <Button variant="secondary" onClick={() => setImportar(true)}><Upload className="w-4 h-4 mr-1" /> Importar archivo</Button>
         <Button onClick={() => setOpen(true)}><Plus className="w-4 h-4 mr-1" /> Agregar trabajador</Button>
       </>}
