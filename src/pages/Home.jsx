@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RAW = "https://raw.githubusercontent.com/Bastiantoloza27/Puerto-Ventanas-Testeo/main/";
 
+const NAV_SCRIPT = `<script>(function(){function add(){if(document.getElementById('pv-personas'))return;var b=[].slice.call(document.querySelectorAll('button')).find(function(x){return x.textContent.trim()==='Seguimiento'});if(!b)return;var n=b.cloneNode(true);n.id='pv-personas';n.textContent='Personas';n.onclick=function(){parent.postMessage({pv:'personas'},'*')};b.after(n)}new MutationObserver(add).observe(document.documentElement,{childList:true,subtree:true});})()</script>`;
+
 export default function Home() {
   const [src, setSrc] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const onMsg = (e) => e.data?.pv === "personas" && navigate("/personas");
+    window.addEventListener("message", onMsg);
+    return () => window.removeEventListener("message", onMsg);
+  }, [navigate]);
 
   useEffect(() => {
     let url;
@@ -14,6 +24,7 @@ export default function Home() {
       const jsUrl = URL.createObjectURL(new Blob([js], { type: "text/javascript" }));
       const logo = RAW + "assets/pvsa-logo.png";
       const full = html
+        .replace("</body>", NAV_SCRIPT + "</body>")
         .replace('src="./support.js"', `src="${jsUrl}"`)
         .replaceAll('src="assets/pvsa-logo.png"', `src="${logo}"`)
         .replaceAll("src:'assets/pvsa-logo.png'", `src:'${logo}'`)

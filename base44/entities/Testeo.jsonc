@@ -1,0 +1,58 @@
+{
+  "name": "Testeo",
+  "type": "object",
+  "properties": {
+    "trabajador_id": {
+      "type": "string"
+    },
+    "codigo": {
+      "type": "string"
+    },
+    "faena": {
+      "type": "string"
+    },
+    "fecha": {
+      "type": "string",
+      "format": "date"
+    },
+    "turno": {
+      "type": "string",
+      "enum": [
+        "T1",
+        "T2",
+        "T3"
+      ]
+    },
+    "sorteo": {
+      "type": "string",
+      "description": "Identificador del sorteo"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "alcohol",
+        "drogas",
+        "ambos"
+      ],
+      "default": "ambos"
+    },
+    "resultado": {
+      "type": "string",
+      "enum": [
+        "negativo",
+        "no_negativo",
+        "ausente",
+        "negativa"
+      ],
+      "default": "negativo"
+    },
+    "observacion": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "trabajador_id",
+    "fecha",
+    "resultado"
+  ]
+}

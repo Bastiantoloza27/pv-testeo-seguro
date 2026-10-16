@@ -1,0 +1,49 @@
+{
+  "name": "Trabajador",
+  "type": "object",
+  "properties": {
+    "codigo": {
+      "type": "string",
+      "description": "C\u00f3digo interno"
+    },
+    "nombre": {
+      "type": "string"
+    },
+    "cargo": {
+      "type": "string"
+    },
+    "faena": {
+      "type": "string"
+    },
+    "ubicacion": {
+      "type": "string"
+    },
+    "turno": {
+      "type": "string",
+      "enum": [
+        "T1",
+        "T2",
+        "T3",
+        "Administrativo",
+        "Rotativo"
+      ],
+      "default": "Rotativo"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "activo",
+        "licencia",
+        "excluido"
+      ],
+      "default": "activo"
+    },
+    "notas": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "codigo",
+    "nombre"
+  ]
+}
