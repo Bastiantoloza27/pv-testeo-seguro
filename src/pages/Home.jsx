@@ -24,6 +24,8 @@ export default function Home() {
       const jsUrl = URL.createObjectURL(new Blob([js], { type: "text/javascript" }));
       const logo = RAW + "assets/pvsa-logo.png";
       const full = html
+        .replace('<div style="padding:9px 10px;font-size:14px;color:#a9c1c0">Personas</div>', "")
+        .replace("</body>", NAV_SCRIPT + "</body>")
         .replace('src="./support.js"', `src="${jsUrl}"`)
         .replaceAll('src="assets/pvsa-logo.png"', `src="${logo}"`)
         .replaceAll("src:'assets/pvsa-logo.png'", `src:'${logo}'`)
