@@ -16,6 +16,7 @@ export default function Home() {
       const full = html
         .replace('src="./support.js"', `src="${jsUrl}"`)
         .replaceAll('src="assets/pvsa-logo.png"', `src="${logo}"`)
+        .replaceAll("src:'assets/pvsa-logo.png'", `src:'${logo}'`)
         .replaceAll("${base}assets/pvsa-logo.png", logo)
         .replaceAll("${location.href.replace(/[^/]*$/,'')}assets/pvsa-logo.png", logo);
       url = URL.createObjectURL(new Blob([full], { type: "text/html" }));
