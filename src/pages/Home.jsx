@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 const RAW = "https://raw.githubusercontent.com/Bastiantoloza27/Puerto-Ventanas-Testeo/main/";
 
-const NAV_SCRIPT = `<script>(function(){function add(){if(document.getElementById('pv-personas'))return;var b=[].slice.call(document.querySelectorAll('button')).find(function(x){return x.textContent.trim()==='Seguimiento'});if(!b)return;var n=b.cloneNode(true);n.id='pv-personas';n.textContent='Personas';n.onclick=function(){parent.postMessage({pv:'personas'},'*')};b.after(n)}new MutationObserver(add).observe(document.documentElement,{childList:true,subtree:true});})()</script>`;
+const NAV_SCRIPT = `<script>(function(){function add(){if(document.getElementById('pv-personas'))return;var b=[].slice.call(document.querySelectorAll('button')).find(function(x){return x.textContent.trim()==='Seguimiento'});if(!b)return;var n=b.cloneNode(true);n.id='pv-personas';n.textContent='Personas';n.onclick=function(){parent.postMessage({pv:'personas'},'*')};b.after(n)}document.addEventListener('click',function(e){var t=e.target.closest('button');if(t&&t.textContent.trim().indexOf('Vista terreno')===0){e.stopPropagation();e.preventDefault();parent.postMessage({pv:'terreno'},'*')}},true);new MutationObserver(add).observe(document.documentElement,{childList:true,subtree:true});})()</script>`;
 
 export default function Home() {
   const [src, setSrc] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const onMsg = (e) => e.data?.pv === "personas" && navigate("/personas");
+    const onMsg = (e) => {
+      if (e.data?.pv === "personas") navigate("/personas");
+      if (e.data?.pv === "terreno") navigate("/terreno");
+    };
     window.addEventListener("message", onMsg);
     return () => window.removeEventListener("message", onMsg);
   }, [navigate]);
