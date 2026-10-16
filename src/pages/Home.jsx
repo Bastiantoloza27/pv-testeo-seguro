@@ -12,7 +12,12 @@ export default function Home() {
       fetch(RAW + "support.js").then((r) => r.text()),
     ]).then(([html, js]) => {
       const jsUrl = URL.createObjectURL(new Blob([js], { type: "text/javascript" }));
-      const full = html.replace('src="./support.js"', `src="${jsUrl}"`);
+      const logo = RAW + "assets/pvsa-logo.png";
+      const full = html
+        .replace('src="./support.js"', `src="${jsUrl}"`)
+        .replaceAll('src="assets/pvsa-logo.png"', `src="${logo}"`)
+        .replaceAll("${base}assets/pvsa-logo.png", logo)
+        .replaceAll("${location.href.replace(/[^/]*$/,'')}assets/pvsa-logo.png", logo);
       url = URL.createObjectURL(new Blob([full], { type: "text/html" }));
       setSrc(url);
     });
